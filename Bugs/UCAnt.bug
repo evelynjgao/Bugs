@@ -1,0 +1,87 @@
+colony: UCAnt // first line specifies the ant's name
+
+// This program controls a single ant and causes it to move
+// around the field and do things.
+// This ant moves around randomly, picks up food if it
+// happens to stumble upon it, eats when it gets hungry,
+// and will drop food on its anthill if it happens to
+// stumble back on its anthill while holding food.
+
+// here's the ant's programming instructions, written
+// in our 'Bugs' language
+
+
+// 0: i_smell_danger_in_front_of_me
+// 1: i_smell_pheromone_in_front_of_me
+// 2: i_was_bit
+// 3: i_am_carrying_food
+// 4: i_am_hungry
+// 5: i_am_standing_on_my_anthill
+// 6: i_am_standing_on_food
+// 7: i_am_standing_with_an_enemy
+// 8: i_was_blocked_from_moving
+// 9: last_random_number_was_zero
+
+
+// emitPheromone
+// faceRandomDirection
+// rotateClockwise
+// rotateCounterClockwise
+// moveForward
+// bite
+// pickupFood
+// dropFood
+// eatFood
+// generateRandomNumber:
+
+start:
+moveForward
+if i_am_standing_on_food then goto on_food
+if i_am_hungry then goto eat_food
+if i_am_standing_on_my_anthill then goto on_hill
+
+// test conditions
+if i_am_standing_with_an_enemy then goto bite_e
+if i_was_bit then goto bite_e
+if i_smell_danger_in_front_of_me then goto rotate_Clockwise
+//if i_smell_pheromone_in_front_of_me then goto start
+//if i_am_carrying_food then goto drop_food
+if i_was_blocked_from_moving then goto rotate_CounterClockwise
+//generateRandomNumber 5
+//if last_random_number_was_zero then goto face_new_direction
+//goto start 	// jump back to the "start:" line
+
+on_food:
+pickUpFood
+goto start	// jump back to the "start:" line
+
+eat_food:
+eatFood          // assumes our ant has already picked up food
+goto start 	// jump back to the "start:" line
+
+on_hill:
+dropFood    // feed the anthill's queen so she
+// can produce more ants for the colony
+goto start  // jump back to the "start:" line
+
+drop_food:
+dropFood    // feed the anthill's queen so she
+// can produce more ants for the colony
+goto start  // jump back to the "start:" line
+
+face_new_direction:
+faceRandomDirection
+goto start
+
+bite_e:
+bite
+goto start
+
+rotate_Clockwise:
+rotateClockwise
+goto start
+
+rotate_CounterClockwise:
+rotateCounterClockwise
+goto start
+
